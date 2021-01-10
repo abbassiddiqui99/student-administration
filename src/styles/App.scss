@@ -1,0 +1,9 @@
+.navbar {
+  box-shadow: 0px 7px 40px rgba(#000000, 0.2);
+}
+
+@media screen and (max-width: 580px) {
+  .nav-item-mobile {
+    display: none;
+  }
+}
