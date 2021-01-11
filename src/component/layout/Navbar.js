@@ -1,7 +1,9 @@
 import React from "react";
+import { useFirebase } from "react-redux-firebase";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const firebase = useFirebase();
   return (
     <nav className="navbar navbar-expand-sm navbar-light bg-white">
       <div className="container">
@@ -24,14 +26,17 @@ const Navbar = () => {
           <ul className="navbar-nav mr-auto"></ul>
           <ul className="navbar-nav align-items-center">
             <li className="nav-item nav-item-mobile">
-              <Link to="/student/form/" className="btn btn-primary mr-3">
+              <Link
+                to="/student/form/"
+                className="btn btn-primary mr-3 btn-navbar"
+              >
                 Add Student
               </Link>
             </li>
             <li className="nav-item dropdown">
-              <a
+              <Link
                 className="nav-a dropdown-toggle"
-                href="!#"
+                to="#"
                 id="navbarDropdown"
                 data-toggle="dropdown"
               >
@@ -41,21 +46,18 @@ const Navbar = () => {
                   alt="admin_image"
                 />
                 <span className="ml-2 navbar-text">Super Mario</span>
-              </a>
+              </Link>
               <div className="dropdown-menu">
-                <a className="dropdown-item bg-dark text-white" href="!#">
+                <Link className="dropdown-item" to="/student/form/">
                   Add Student
-                </a>
-                <a className="dropdown-item bg-dark text-white" href="!#">
-                  Profile
-                </a>
-                <a className="dropdown-item bg-dark text-white" href="!#">
+                </Link>
+                <Link
+                  className="dropdown-item"
+                  to="#"
+                  onClick={() => firebase.logout()}
+                >
                   Logout
-                </a>
-                <div className="dropdown-divider"></div>
-                <a className="dropdown-item" href="!#">
-                  Ads
-                </a>
+                </Link>
               </div>
             </li>
           </ul>

@@ -1,8 +1,13 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useFirestore } from "react-redux-firebase";
+import { useHistory, useParams } from "react-router-dom";
 
 const StudentForm = () => {
+  const firestore = useFirestore();
+  let history = useHistory();
   const { id } = useParams();
+  const docRef = id ? firestore.collection("students").doc(id) : null;
+  console.log(id);
   const [student, setStudent] = useState({
     name: "",
     email: "",
@@ -12,18 +17,49 @@ const StudentForm = () => {
     address2: "",
   });
 
+  const loadStudent = async () => {
+    try {
+      const result = await docRef.get();
+      //   console.log(result);
+      if (result.exists) {
+        setStudent(result.data());
+        console.log(result.data());
+        console.log(student);
+      } else {
+        console.log("Not Found!!!!!!!");
+      }
+    } catch (error) {
+      console.log("ERROR", error);
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      loadStudent();
+    }
+  }, [id]);
+
   const onChangeHandler = (e) => {
     return setStudent({ ...student, [e.target.name]: e.target.value });
   };
 
-  const submitFormHandler = (e) => {
+  const submitFormHandler = async (e) => {
     e.preventDefault();
     if (id) {
-      console.log(id);
-      console.log("Updated");
+      await docRef.update({
+        ...student,
+        createdAt: firestore.FieldValue.serverTimestamp(),
+      });
+
+      //   console.log(id);
+      //   console.log("Updated");
     } else {
+      firestore
+        .collection("students")
+        .add({ ...student, createdAt: firestore.FieldValue.serverTimestamp() });
       console.log("Added");
     }
+    history.push("/");
   };
 
   return (
@@ -42,6 +78,7 @@ const StudentForm = () => {
                       value={student.name}
                       onChange={onChangeHandler}
                       className="form-control"
+                      required
                     />
                   </div>
                   <div className="col-md-6">
@@ -52,6 +89,7 @@ const StudentForm = () => {
                       value={student.email}
                       onChange={onChangeHandler}
                       className="form-control"
+                      required
                     />
                   </div>
                 </div>
@@ -64,6 +102,7 @@ const StudentForm = () => {
                       value={student.phone}
                       onChange={onChangeHandler}
                       className="form-control"
+                      required
                     />
                   </div>
                   <div className="col-md-6">
@@ -74,6 +113,7 @@ const StudentForm = () => {
                       value={student.standard}
                       onChange={onChangeHandler}
                       className="form-control"
+                      required
                     />
                   </div>
                 </div>
@@ -86,6 +126,7 @@ const StudentForm = () => {
                       value={student.address1}
                       onChange={onChangeHandler}
                       className="form-control"
+                      required
                     />
                   </div>
                   <div className="col-md-6">
@@ -96,11 +137,12 @@ const StudentForm = () => {
                       value={student.address2}
                       onChange={onChangeHandler}
                       className="form-control"
+                      required
                     />
                   </div>
                 </div>
 
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary btn-profile">
                   {id ? "Update" : "Add Student"}
                 </button>
               </form>
