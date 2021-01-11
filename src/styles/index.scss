@@ -5,5 +5,9 @@ $theme-colors: (
 $card-border-width: 0;
 $body-bg: #ffffff;
 
+.card {
+  position: relative;
+}
+
 // Bootstrap and its default variables
 @import "~bootstrap/scss/bootstrap";

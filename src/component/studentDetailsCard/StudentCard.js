@@ -1,5 +1,6 @@
 import React from "react";
 import Avatar from "react-avatar";
+import { Link } from "react-router-dom";
 
 const StudentCard = () => {
   return (
@@ -20,9 +21,12 @@ const StudentCard = () => {
               <div className="card-body">
                 <h5 className="card-title mb-0">Student Name</h5>
                 <p className="text-muted small">Student E-mail</p>
-                <a href="!#" className="btn btn-primary btn-profile">
+                <Link
+                  to="/student/view/:id"
+                  className="btn btn-primary btn-profile"
+                >
                   View Profile
-                </a>
+                </Link>
                 <button className="btn btn-edit">
                   <span className="material-icons">delete_outline</span>
                 </button>

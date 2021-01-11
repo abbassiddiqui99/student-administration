@@ -1,24 +1,32 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-sm navbar-light bg-white">
       <div className="container">
-        <a className="navbar-brand" href="/">
+        <Link className="navbar-brand" to="/">
+          <img
+            src="/assets/images/administrator.png"
+            height="50px"
+            alt="admin"
+          />
+        </Link>
+        {/* <a className="navbar-brand" href="/">
           <img
             src="assets/images/administrator.png"
             height="50px"
             alt="admin"
           />
-        </a>
+        </a> */}
 
         <div>
           <ul className="navbar-nav mr-auto"></ul>
           <ul className="navbar-nav align-items-center">
             <li className="nav-item nav-item-mobile">
-              <a href="#!" className="btn btn-primary mr-3">
+              <Link to="/student/form/" className="btn btn-primary mr-3">
                 Add Student
-              </a>
+              </Link>
             </li>
             <li className="nav-item dropdown">
               <a
@@ -28,11 +36,11 @@ const Navbar = () => {
                 data-toggle="dropdown"
               >
                 <img
-                  src="assets/images/administrator.png"
+                  src="/assets/images/administrator.png"
                   height="30px"
                   alt="admin_image"
                 />
-                <span className="ml-2 navbar-text">Subroto Biswas</span>
+                <span className="ml-2 navbar-text">Super Mario</span>
               </a>
               <div className="dropdown-menu">
                 <a className="dropdown-item bg-dark text-white" href="!#">
